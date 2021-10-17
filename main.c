@@ -5,12 +5,19 @@
 int main(void) {
   int i, length = 0;
   char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\"}";
+  printf("%c\n",test[sizeof test-2,sizeof test-3]);
   char dictkey[] = "Test0";
   int testt3 = 0;
   int keylength = sizeof dictkey - 1;
   int testt4 = 0;
   int testt5 = 0;
   int testt6 = 0;
+  char returnkey[] = "";
+  char sub[1000];
+  int c = 0;
+  int beginkey = 3;
+  int endkey = 6;
+ 
   for (i = 0; test[i] != '\0' && test[i] != '\n'; i++) {
     length++;
   }
@@ -34,13 +41,24 @@ int main(void) {
         if (test[i + keylength + 2] == ':'){
           while (testt5 == 0){
             if (test[i + keylength + 4 + testt6] == '\"'){
-              int beginkey = i + keylength + 4;
-              int endkey = i + keylength + 4 + testt6;
+              beginkey = i + keylength + 4;
+              endkey = i + keylength + 4 + testt6;
               printf("Key is between %d and %d.\n",i + keylength + 4,i + keylength + 4 + testt6);
               testt5++;
             }
             testt6++;
           }
+
+          int position = i + keylength + 5;
+          int length = endkey - position + 1;
+ 
+          while (c < length) {
+            sub[c] = test[position+c-1];
+            c++;
+          }
+          sub[c] = '\0';
+ 
+          printf("Value of key is \"%s\"\n", sub); // '\"' to print "
 
         }
       };
