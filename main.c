@@ -1,4 +1,4 @@
-//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson 
+//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson
 
 #include <stdio.h>
 
@@ -12,10 +12,7 @@ int main(void) {
   char sub[1000];
   int beginkey = 3;
   int endkey = 6;
-  for (i = 0; test[i] != '\0' && test[i] != '\n'; i++) {
-    length++;
-  }
-  for(int i = 0; i < length; ++i) {
+  for(int i = 0; i < sizeof test; ++i) {
     char testti1 = i;
     char testt1 = test[i];
     char testt2 = '\"';
