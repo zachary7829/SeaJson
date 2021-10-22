@@ -1,17 +1,48 @@
-//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson
+//Zachary Keffaber / zachary7829, 2021/10/12, SeaJson 
 
 #include <stdio.h>
 
 int main(void) {
   int i, length = 0;
-  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\"}";
-  char dictkey[] = "Test0";
+  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"}\"Test3\":5,\"Test4\":true}";
+  char dictkey[] = "Test4";
   int testt3, testt4, testt5, testt6, c = 0;
   int keylength = sizeof dictkey - 1;
   char returnkey[] = "";
   char sub[1000];
   int beginkey = 3;
   int endkey = 6;
+  int tempvar, charindex = 0;
+  int dotcount = 0;
+  int dotcount2 = 0;
+  int getdot = 2;
+  int ignore = 0;
+  int instring = 0;
+  //Count number of dots in dictkey
+  while (charindex < sizeof dictkey){
+    if (dictkey[charindex] == '.'){
+      dotcount++;
+    } else {
+      printf("%c",dictkey[charindex]);
+    }
+    charindex++;
+  }
+  charindex = 0;
+  //Get part of dictkey after a dot
+  while (tempvar == 0){
+    if (dictkey[charindex] == '.'){
+      dotcount2++;
+    } else {
+      if (dotcount2 == getdot) {
+        printf("%c",dictkey[charindex]);
+      }
+    }
+    charindex++;
+    if (!(charindex < sizeof dictkey)) {
+      tempvar++;
+    }
+  }
+  printf("\n");
   for(int i = 0; i < sizeof test; ++i) {
     char testti1 = i;
     char testt1 = test[i];
@@ -30,13 +61,29 @@ int main(void) {
       }
       if (keylength == testt4){
         if (test[i + keylength + 2] == ':'){
+          if (test[i + keylength + 3] == '\"'){
+            instring = 1;
+          }
           while (testt5 == 0){
-            if (test[i + keylength + 4 + testt6] == '\"'){
-              beginkey = i + keylength + 5;
-              endkey = i + keylength + 4 + testt6;
-              printf("Key is between %d and %d.\n",beginkey,endkey);
-              testt5++;
+            if (((test[i + keylength + 4 + testt6] == '\"') && instring == 1) || ((test[i + keylength + 4 + testt6] == ',') && instring == 0) || ((test[i + keylength + 4 + testt6] == '}') && instring == 0)){
+              if (ignore == 0){
+                if (test[i + keylength + 3] == '\"'){
+                  beginkey = i + keylength + 5;
+                } else {
+                  beginkey = i + keylength + 4;
+                }
+                endkey = i + keylength + 4 + testt6;
+                printf("Key is between %d and %d.\n",beginkey,endkey);
+                testt5++;
+              }
+            } else if (test[i + keylength + 4 + testt6] == '{'){
+              ignore++;
+              printf("ignore on");
+            } else if (test[i + keylength + 4 + testt6] == '}'){
+              ignore = ignore - 1;
+              printf("ignore off");
             }
+            printf("%c",test[i + keylength + 4 + testt6]);
             testt6++;
           }
           int position = beginkey;
