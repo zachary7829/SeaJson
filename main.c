@@ -4,12 +4,12 @@
 
 int main(void) {
   int i, length = 0;
-  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"}\"Test3\":5,\"Test4\":true}";
-  char dictkey[] = "Test4";
+  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"},\"Test3\":5,\"Test4\":true}";
+  char dictkey[] = "Test2";
   int testt3, testt4, testt5, testt6, c = 0;
   int keylength = sizeof dictkey - 1;
   char returnkey[] = "";
-  char sub[1000];
+  char sub[sizeof test + 1];
   int beginkey = 3;
   int endkey = 6;
   int tempvar, charindex = 0;
@@ -65,7 +65,11 @@ int main(void) {
             instring = 1;
           }
           while (testt5 == 0){
-            if (((test[i + keylength + 4 + testt6] == '\"') && instring == 1) || ((test[i + keylength + 4 + testt6] == ',') && instring == 0) || ((test[i + keylength + 4 + testt6] == '}') && instring == 0)){
+            if (test[i + keylength + 4 + testt6] == '}' && ignore > 0){
+              ignore = ignore - 1;
+            } else if (test[i + keylength + 3 + testt6] == '{'){
+              ignore++;
+            } else if (((test[i + keylength + 4 + testt6] == '\"') && instring == 1 && ignore == 0) || ((test[i + keylength + 4 + testt6] == ',') && instring == 0 && ignore == 0) || ((test[i + keylength + 4 + testt6] == '}') && instring == 0 && ignore == 0)){
               if (ignore == 0){
                 if (test[i + keylength + 3] == '\"'){
                   beginkey = i + keylength + 5;
@@ -76,14 +80,7 @@ int main(void) {
                 printf("Key is between %d and %d.\n",beginkey,endkey);
                 testt5++;
               }
-            } else if (test[i + keylength + 4 + testt6] == '{'){
-              ignore++;
-              printf("ignore on");
-            } else if (test[i + keylength + 4 + testt6] == '}'){
-              ignore = ignore - 1;
-              printf("ignore off");
             }
-            printf("%c",test[i + keylength + 4 + testt6]);
             testt6++;
           }
           int position = beginkey;
