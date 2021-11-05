@@ -1,6 +1,6 @@
 //Zachary Keffaber / zachary7829, 2021/10/12, SeaJson 
 
-//NOTE: This code is *really* bad, please use a diffferent json parser
+//NOTE: This code is *really* bad, please use something else
 
 #include <stdio.h>
 #include <string.h>
@@ -128,14 +128,18 @@ int seajson(char *funckey) {
   return 0;
 }
 
-const char * getstring(char *funckey) {
+const char * getstring(char *funckey, char *dict) {
   char funckey1[strlen(funckey)];
   for (size_t i = 0; i < strlen(funckey); i++) {
     // Access each char in the string
     funckey1[i] = funckey[i];
   }
   int i = 0;
-  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"},\"Test3\":5,\"Test4\":true}";
+  char test[strlen(dict)];
+  for (size_t i = 0; i < strlen(dict); i++) {
+    // Access each char in the string
+    test[i] = dict[i];
+  }
   if (!(funckey1[strlen(funckey1) - 1] == '.')){
     strcat(funckey1,".");
   }
