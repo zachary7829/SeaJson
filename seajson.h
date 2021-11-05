@@ -12,7 +12,7 @@ int seajson(char *funckey) {
     funckey1[i] = funckey[i];
   }
   int i = 0;
-  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"},\"Test3\":5,\"Test4\":true}";
+  char test[] = "{\"Test0\":\"Testinggg\",\"Test1\":\"Testto\",\"Test2\":{\"Test20\":\"Testta\",\"Test21\":\"Testte\"},\"Test3\":5,\"SaveFile\":\"ok\",\"Test4\":true}";
   if (!(funckey1[strlen(funckey1) - 1] == '.')){
     strcat(funckey1,".");
   }
@@ -61,12 +61,10 @@ int seajson(char *funckey) {
       }
     }
     charindex++;
-    if (!(charindex < strlen(funckey1))) {
+    if (!(charindex < sizeof funckey1)) {
       tempvar++;
     }
   }
-  endkeysegment -= 0;
-  keysegmentlength -= 0;
   beginkeysegment = (endkeysegment - keysegmentlength) + 1;
   int segmentposition = beginkeysegment + 1;
   while (c2 < keysegmentlength) {
@@ -188,7 +186,7 @@ const char * getstring(char *funckey, char *dict) {
       }
     }
     charindex++;
-    if (!(charindex < strlen(funckey1))) {
+    if (!(charindex < sizeof funckey1)) {
       tempvar++;
     }
   }
