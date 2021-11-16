@@ -23,7 +23,7 @@ char * getstring(char *funckey, char *dict) {
   if (!(funckey1[strlen(funckey1) - 1] == '.')){
     strcat(funckey1,".");
   }
-  int testt3, testt4, testt5, testt6, beginkey, endkey = 0;
+  int testt3, testt4, beginkey, endkey = 0;
   int c = 0;
   int keylength = strlen(funckey1);
   char sub[sizeof test + 1];
@@ -68,13 +68,10 @@ char * getstring(char *funckey, char *dict) {
    c2++;
   }
   for(int i = 0; i < sizeof test; ++i) {
-    char testt1 = test[i];
-    if (testt1 == '\"'){
+    if (test[i] == '\"'){
       //is "
-      testt4 = 0;
       testt3 = 0;
-      testt5 = 0;
-      testt6 = 0;
+      testt4 = 0;
       while (testt3 < keylength){
         testt3++;
         if (dictkeysegment[testt3-1] == test[i+testt3]){
@@ -82,27 +79,28 @@ char * getstring(char *funckey, char *dict) {
         }
       }
       if (keysegmentlength == testt4){
+        testt4 = 0;
         if (test[i + keysegmentlength + 2] == ':'){
           if (test[i + keysegmentlength + 3] == '\"'){
             instring = 1;
           }
-          while (testt5 == 0){
-            if (test[i + keysegmentlength + 4 + testt6] == '}' && ignore > 0){
+          while (testt3){
+            if (test[i + keysegmentlength + 4 + testt4] == '}' && ignore > 0){
               ignore = ignore - 1;
-            } else if (test[i + keysegmentlength + 3 + testt6] == '{'){
+            } else if (test[i + keysegmentlength + 3 + testt4] == '{'){
               ignore++;
-            } else if (((test[i + keysegmentlength + 4 + testt6] == '\"') && instring == 1 && ignore == 0) || ((test[i + keysegmentlength + 4 + testt6] == ',') && instring == 0 && ignore == 0) || ((test[i + keysegmentlength + 4 + testt6] == '}') && instring == 0 && ignore == 0)){
+            } else if (((test[i + keysegmentlength + 4 + testt4] == '\"') && instring == 1 && ignore == 0) || ((test[i + keysegmentlength + 4 + testt4] == ',') && instring == 0 && ignore == 0) || ((test[i + keysegmentlength + 4 + testt4] == '}') && instring == 0 && ignore == 0)){
               if (ignore == 0){
                 if (test[i + keysegmentlength + 3] == '\"'){
                   beginkey = i + keysegmentlength + 5;
                 } else {
                   beginkey = i + keysegmentlength + 4;
                 }
-                endkey = i + keysegmentlength + 4 + testt6;
-                testt5++;
+                endkey = i + keysegmentlength + 4 + testt4;
+                break;
               }
             }
-            testt6++;
+            testt4++;
           }
           while (c < endkey - beginkey + 1) {
             sub[c] = test[beginkey+c-1];
