@@ -6,6 +6,9 @@
 #include <string.h>
 
 char * getstring(char *funckey, char *dict) {
+  if (strlen(funckey) == 0){
+    return "NO INPUT";
+  }
   char funckey1[strlen(funckey)];
   for (size_t i = 0; i < strlen(funckey); i++) {
     // Access each char in the string
@@ -20,15 +23,10 @@ char * getstring(char *funckey, char *dict) {
   if (!(funckey1[strlen(funckey1) - 1] == '.')){
     strcat(funckey1,".");
   }
-  int testt3 = 0;
-  int testt4 = 0;
-  int testt5 = 0;
-  int testt6 = 0;
+  int testt3, testt4, testt5, testt6, beginkey, endkey = 0;
   int c = 0;
   int keylength = strlen(funckey1);
   char sub[sizeof test + 1];
-  int beginkey = 3;
-  int endkey = 6;
   int ignore = 0;
   int instring = 0;
   int tempvar = 0;
@@ -71,8 +69,7 @@ char * getstring(char *funckey, char *dict) {
   }
   for(int i = 0; i < sizeof test; ++i) {
     char testt1 = test[i];
-    char testt2 = '\"';
-    if (testt1 == testt2){
+    if (testt1 == '\"'){
       //is "
       testt4 = 0;
       testt3 = 0;
